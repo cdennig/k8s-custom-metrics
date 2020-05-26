@@ -1,0 +1,15 @@
+apiVersion: keda.k8s.io/v1alpha1
+kind: ScaledObject
+metadata:
+  name: prometheus-scaledobject
+  namespace: default
+spec:
+  scaleTargetRef:
+    deploymentName: promdemo
+  triggers:
+  - type: prometheus
+    metadata:
+      serverAddress: http://prometheus-k8s.monitoring.svc:9090
+      metricName: custom_metric_counter_total_by_pod
+      threshold: '3'
+      query: sum(custom_metric_counter_total_by_pod{namespace!="",pod!=""})
