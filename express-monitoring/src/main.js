@@ -1,6 +1,8 @@
 const express = require("express");
 const os = require("os");
 const app = express();
+const apiMetrics = require("prometheus-api-metrics");
+app.use(apiMetrics());
 app.use(express.json());
 
 const client = require("prom-client");
